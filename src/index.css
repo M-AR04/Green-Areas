@@ -1,0 +1,584 @@
+/* ==========================================
+   GREEN ARES DESIGN SYSTEM & BRANDING STYLES
+   ========================================== */
+
+/* 1. Global Variables & Themes */
+:root {
+  /* Brand HSL Colors (Derived from logo.png) */
+  --clr-green-primary: hsl(123, 52%, 46%);    /* Vibrant Emerald Green */
+  --clr-green-dark: hsl(164, 82%, 15%);      /* Deep Forest Green/Teal */
+  --clr-laser-glow: hsl(120, 100%, 50%);     /* Electric Neon Laser */
+  
+  /* Industrial Metallic Scales */
+  --clr-bg-black: hsl(210, 18%, 6%);         /* Deep Charcoal Carbon */
+  --clr-surface-dark: hsl(210, 14%, 11%);    /* Slag Metal Surface */
+  --clr-surface-light: hsl(210, 12%, 18%);   /* Burnished Steel Accent */
+  --clr-border-metal: hsl(210, 10%, 22%);    /* Welded Steel Edge */
+  --clr-border-glow: hsla(123, 52%, 46%, 0.35); /* Glowing weld border */
+  
+  /* Premium Metallic Highlights */
+  --clr-gold: hsl(38, 55%, 58%);             /* Burnished Bronze / Gold Accent */
+  --clr-silver: hsl(210, 15%, 85%);          /* Polished Aluminum */
+  --clr-text-main: hsl(210, 10%, 90%);       /* High-contrast off-white */
+  --clr-text-muted: hsl(210, 8%, 65%);       /* Industrial grey */
+
+  /* Typography variables */
+  --font-en: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-ar: 'Cairo', 'Tajawal', Tahoma, sans-serif;
+  
+  /* Layout constraints */
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --shadow-premium: 0 10px 30px -10px hsla(0, 0%, 0%, 0.7);
+  --shadow-glow: 0 0 20px -5px hsla(123, 52%, 46%, 0.5);
+  --border-radius-sm: 6px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
+}
+
+/* 2. Reset & Base Settings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--clr-bg-black);
+  color: var(--clr-text-main);
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-en);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Bilingual Direction Override Styles */
+[dir="rtl"] body {
+  font-family: var(--font-ar);
+  letter-spacing: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--clr-bg-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--clr-surface-light);
+  border: 2px solid var(--clr-bg-black);
+  border-radius: 4px;
+  transition: var(--transition-smooth);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-green-primary);
+  box-shadow: 0 0 8px var(--clr-laser-glow);
+}
+
+/* Selection Highlight */
+::selection {
+  background-color: var(--clr-green-primary);
+  color: var(--clr-bg-black);
+}
+
+/* Base Typography Elements */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  transition: var(--transition-smooth);
+}
+
+/* 3. Dynamic Keyframe Animations */
+@keyframes laser-scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(200%); opacity: 0; }
+}
+
+@keyframes spark-float {
+  0% { transform: translateY(100%) translateX(0) scale(1); opacity: 0; }
+  10% { opacity: 0.8; }
+  50% { transform: translateY(50vh) translateX(20px) scale(1.2); }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-10vh) translateX(-20px) scale(0.5); opacity: 0; }
+}
+
+@keyframes door-left-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes door-right-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; filter: drop-shadow(0 0 2px var(--clr-green-primary)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 10px var(--clr-laser-glow)); }
+}
+
+@keyframes scale-infinite {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes laser-horizontal-cut {
+  0% { left: -10%; }
+  50% { left: 110%; }
+  100% { left: -10%; }
+}
+
+/* 4. Preloading Animation Screen Layout */
+.preloader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  overflow: hidden;
+}
+
+.preloader-door {
+  width: 50%;
+  height: 100%;
+  background-color: var(--clr-bg-black);
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-right: 1px solid var(--clr-border-metal);
+}
+
+.preloader-door.left {
+  left: 0;
+  align-items: flex-end;
+  padding-right: 40px;
+}
+
+.preloader-door.right {
+  right: 0;
+  align-items: flex-start;
+  padding-left: 40px;
+  border-right: none;
+  border-left: 1px solid var(--clr-border-metal);
+}
+
+.preloader-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  text-align: center;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Glowing horizontal laser line during preload */
+.preloader-laser-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--clr-laser-glow), transparent);
+  box-shadow: 0 0 12px var(--clr-laser-glow);
+  z-index: 21;
+  pointer-events: none;
+}
+
+.preloader-percentage {
+  font-family: monospace;
+  font-size: 2rem;
+  color: var(--clr-green-primary);
+  margin-top: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(58, 177, 77, 0.4);
+}
+
+.preloader-status {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--clr-text-muted);
+  margin-top: 8px;
+}
+
+/* Preloader Dismiss States */
+.preloader-container.loaded .preloader-door.left {
+  animation: door-left-slide 1.2s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+.preloader-container.loaded .preloader-door.right {
+  animation: door-right-slide 1.2s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+.preloader-container.loaded .preloader-content,
+.preloader-container.loaded .preloader-laser-line {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.preloader-container.loaded {
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 1.2s ease;
+}
+
+/* 5. Sparks Overlay (Background Atmospheric Effect) */
+.sparks-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.spark-particle {
+  position: absolute;
+  bottom: -20px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: var(--clr-green-primary);
+  box-shadow: 0 0 6px var(--clr-laser-glow);
+  animation: spark-float 8s infinite linear;
+  opacity: 0;
+}
+
+/* 6. Layout Containers & Grid */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+section {
+  padding: 100px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section {
+  height: 100vh;
+  min-height: 700px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: #000;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: auto !important;
+    min-height: 100vh !important;
+    padding-top: 120px !important;
+    padding-bottom: 50px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+  }
+}
+
+/* 7. Glassmorphism Utilities */
+.glass-panel {
+  background: rgba(18, 22, 27, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--clr-border-metal);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-premium);
+}
+
+.glass-panel:hover {
+  border-color: var(--clr-border-glow);
+}
+
+/* 8. Glowing Border Card & Laser Sweep */
+.glow-card {
+  position: relative;
+  background-color: var(--clr-surface-dark);
+  border: 1px solid var(--clr-border-metal);
+  border-radius: var(--border-radius-md);
+  padding: 30px;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+.glow-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--clr-green-primary), transparent);
+  opacity: 0;
+  transition: var(--transition-smooth);
+}
+
+.glow-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--clr-border-glow);
+  box-shadow: var(--shadow-glow);
+}
+
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+/* The actual laser sweep line inside the card */
+.glow-card .laser-sweep {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--clr-laser-glow);
+  box-shadow: 0 0 10px var(--clr-laser-glow);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glow-card:hover .laser-sweep {
+  animation: laser-scan 2.5s infinite linear;
+}
+
+/* 9. Interactive Premium Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  gap: 10px;
+}
+
+.btn-primary {
+  background-color: var(--clr-green-primary);
+  color: var(--clr-bg-black);
+  font-weight: 700;
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background-color: var(--clr-laser-glow);
+  box-shadow: 0 0 25px var(--clr-laser-glow);
+}
+
+.btn-secondary {
+  border: 1px solid var(--clr-border-metal);
+  background-color: rgba(18, 22, 27, 0.4);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--clr-green-primary);
+  background-color: rgba(58, 177, 77, 0.1);
+  color: var(--clr-green-primary);
+  box-shadow: 0 0 15px rgba(58, 177, 77, 0.2);
+}
+
+/* Spark style button helper */
+.btn-laser {
+  position: relative;
+}
+
+.btn-laser::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background-color: var(--clr-laser-glow);
+  box-shadow: 0 0 10px var(--clr-laser-glow);
+  animation: laser-horizontal-cut 3s infinite linear;
+}
+
+/* 10. Title Section Typography Style */
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+  color: #fff;
+}
+
+.section-header h2 span {
+  color: var(--clr-green-primary);
+}
+
+.section-header p {
+  color: var(--clr-text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+}
+
+[dir="rtl"] .section-header h2 {
+  letter-spacing: 0;
+}
+
+/* 11. Custom Interactive Visualizer Map */
+.map-visualizer {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: var(--border-radius-md);
+  background-color: #0b0d10;
+  border: 1px solid var(--clr-border-metal);
+  overflow: hidden;
+}
+
+.map-grid-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 30px 30px;
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+  pointer-events: none;
+}
+
+.map-radar-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(58, 177, 77, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: scale-infinite 4s infinite ease-in-out;
+}
+
+.map-radar-circle::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background-color: var(--clr-laser-glow);
+  box-shadow: 0 0 10px var(--clr-laser-glow);
+  border-radius: 50%;
+}
+
+.map-location-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.map-location-pin i {
+  font-size: 2.2rem;
+  color: var(--clr-green-primary);
+  animation: scale-infinite 2s infinite ease-in-out;
+  filter: drop-shadow(0 0 8px var(--clr-laser-glow));
+}
+
+.map-pin-pulse {
+  position: absolute;
+  top: 15px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--clr-laser-glow);
+  border-radius: 50%;
+  transform: scale(3);
+  opacity: 0;
+  animation: scale-infinite 1.5s infinite linear;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  section {
+    padding: 60px 0;
+  }
+  .section-header h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+  .section-header {
+    margin-bottom: 40px;
+  }
+  .glow-card {
+    padding: 20px;
+  }
+  .glass-panel {
+    padding: 20px !important;
+  }
+  .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}
+
